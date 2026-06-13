@@ -6,7 +6,7 @@ Administra el registro y la información de los pacientes que ingresan al sistem
 Forma parte de una arquitectura de microservicios:
 
 ```
-ms-front (React) → bff-gateway → [ ms-pacientes | ms-citas | ms-listaEspera | ms-reasignacion ]
+ms-front (React) -> bff-gateway -> [ ms-pacientes | ms-citas | ms-listaEspera | ms-reasignacion ]
 ```
 
 ---
@@ -14,7 +14,7 @@ ms-front (React) → bff-gateway → [ ms-pacientes | ms-citas | ms-listaEspera 
 ## Stack tecnológico
 
 | Tecnología | Versión / Detalle |
-|---|---|
+| --- | --- |
 | Java | 21 |
 | Spring Boot | 4.0.6 |
 | Build | Maven (con wrapper `mvnw`) |
@@ -35,7 +35,7 @@ ms-front (React) → bff-gateway → [ ms-pacientes | ms-citas | ms-listaEspera 
 
 ---
 
-##  Configuración
+## Configuración
 
 La configuración está en `src/main/resources/application.properties`:
 
@@ -47,7 +47,7 @@ Para los **tests** se usa un perfil separado (`src/test/resources/application-te
 
 ---
 
-## ️ Cómo ejecutar
+## Cómo ejecutar
 
 ```bash
 # Construir
@@ -61,12 +61,12 @@ El microservicio queda disponible en `http://localhost:8081`.
 
 ---
 
-##  API REST
+## API REST
 
 Ruta base: `/api/pacientes`
 
 | Método | Endpoint | Descripción | Respuesta |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `POST` | `/api/pacientes` | Crea un paciente | 201 Created |
 | `GET` | `/api/pacientes` | Lista todos los pacientes | 200 OK |
 | `GET` | `/api/pacientes/{id}` | Obtiene un paciente por id | 200 OK / 404 |
@@ -74,9 +74,11 @@ Ruta base: `/api/pacientes`
 | `DELETE` | `/api/pacientes/{id}` | Elimina un paciente | 204 No Content / 404 |
 
 ### Documentación interactiva (Swagger)
+
 Con el servicio corriendo: **http://localhost:8081/swagger-ui.html**
 
 ### Ejemplo de cuerpo (POST / PUT)
+
 ```json
 {
   "rut": "12345678-9",
@@ -87,15 +89,16 @@ Con el servicio corriendo: **http://localhost:8081/swagger-ui.html**
 ```
 
 ### Manejo de errores
+
 | Código | Situación |
-|---|---|
+| --- | --- |
 | `400` | Datos inválidos (validación `@Valid`) |
 | `404` | Paciente no encontrado |
 | `409` | RUT duplicado |
 
 ---
 
-##  Pruebas y cobertura
+## Pruebas y cobertura
 
 ```bash
 # Ejecutar todas las pruebas unitarias
@@ -105,31 +108,35 @@ Con el servicio corriendo: **http://localhost:8081/swagger-ui.html**
 Las pruebas usan **JUnit 5 + Mockito** (sin base de datos real, gracias a H2 + perfil `test`).
 
 El reporte de **cobertura (JaCoCo)** se genera en:
+
 ```
 target/site/jacoco/index.html
 ```
+
 Cobertura actual: **~90% de líneas** (sobre el mínimo exigido del 60%).
 
 ---
 
-##  Estructura del proyecto
+## Estructura del proyecto
 
 ```
 src/main/java/com/rednorte/ms_pacientes/
-├── model/         → Entidad JPA Paciente
-├── repository/    → PacienteRepository (Repository Pattern)
-├── dto/           → PacienteRequest / PacienteResponse
-├── service/       → PacienteService (interfaz) + PacienteServiceImpl
-├── controller/    → PacienteController (endpoints REST)
-├── exception/     → Excepciones propias + GlobalExceptionHandler + ErrorResponseDTO
-└── config/        → OpenApiConfig (Swagger)
+├── model/         -> Entidad JPA Paciente
+├── repository/    -> PacienteRepository (Repository Pattern)
+├── dto/           -> PacienteRequest / PacienteResponse
+├── service/       -> PacienteService (interfaz) + PacienteServiceImpl
+├── controller/    -> PacienteController (endpoints REST)
+├── exception/     -> Excepciones propias + GlobalExceptionHandler + ErrorResponseDTO
+└── config/        -> OpenApiConfig (Swagger)
 ```
 
-##  Patrón de diseño
+## Patrón de diseño
+
 **Repository Pattern** — la interfaz `PacienteRepository` extiende `JpaRepository`, desacoplando la lógica de negocio del acceso a datos. Spring Data genera la implementación en tiempo de ejecución.
 
 ---
 
-##  Equipo
+## Equipo
+
 Proyecto académico — Desarrollo Fullstack III (DSY1106), Duoc UC.
 Responsable del microservicio: **Cristian T.**
